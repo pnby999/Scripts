@@ -37,7 +37,7 @@ local function Command(p, msg)
 				if PUBLIC then
 					saymsg:FireServer((PUBLICITALICS and "/me " or '').."[CHAT SPY] [".. p.Name .."]: "..msg,"All")
 				else
-					PRIVATE.Text = "[CHAT SPY] [".. p.Name .."]: "..msg
+					PRIVATE.Text = "[Lucifer | Chat Spy] [".. p.Name .."]: "..msg
 					StarterGui:SetCore("ChatMakeSystemMessage", PRIVATE)
 				end
 			end
