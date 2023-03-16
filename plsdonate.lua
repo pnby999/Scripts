@@ -1516,9 +1516,9 @@ local standingPos = otherTab2:AddDropdown("[ " .. getgenv().settings.standingPos
 	if t == "Front" then
 		getgenv().settings.boothPosition = 3
 	elseif t == "Left" then
-		getgenv().settings.boothPosition = -6
+		getgenv().settings.boothPosition = -4
 	elseif t == "Right" then
-		getgenv().settings.boothPosition = 6
+		getgenv().settings.boothPosition = 4
 	else
 		getgenv().settings.boothPosition = -5.5
 	end
