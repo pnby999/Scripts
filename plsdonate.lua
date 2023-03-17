@@ -252,7 +252,7 @@ local queueonteleport = (syn and syn.queue_on_teleport) or queue_on_teleport or 
 local httprequest = (syn and syn.request) or http and http.request or http_request or (fluxus and fluxus.request) or request
 local httpservice = game:GetService('HttpService')
 if queueonteleport then
-	queueonteleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/CF-Trail/tzechco-PlsDonateAutofarmBackup/main/old.lua'))()")
+	queueonteleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/pnby999/Scripts/main/plsdonate.lua'))()")
 end
 local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/CF-Trail/tzechco-PlsDonateAutofarmBackup/main/UI"))()
 function forceServerHop()
@@ -724,7 +724,30 @@ function updateBoothText()
 			end
 		end
 	end
-	if getgenv().settings.signToggle and getgenv().settings.signUpdateToggle and getgenv().settings.signText and signPass then
+	if getgenv().settings.textUpdateToggle and getgenv().settings.customSignText and getgenv().settings.rainbowText2 then
+		while task.wait() and getgenv().settings.rainbowText2 do
+			task.wait(4.5)
+			for i, v in next, RainbowHexColors do
+				if not getgenv().settings.rainbowText2 then
+					break
+				end
+				if not getgenv().settings.noFont then
+					boothText = tostring('<font face="' .. getgenv().settings.fontFace .. '" size="' .. getgenv().settings.fontSize .. '" color="#' .. v .. '">' .. text .. '</font>')
+				else
+					boothText = tostring('<font color="' .. v .. '">' .. text .. '</font>')
+				end
+				require(game:GetService('ReplicatedStorage').Remotes).Event("SetBoothText"):FireServer(boothText, "booth")
+				task.wait(3)
+			end
+		end
+	end
+	if getgenv().settings.signToggle and getgenv().settings.signUpdateToggle and getgenv().settings.signText and getgenv().settings.rainbowText2 and signPass then
+				while task.wait() and getgenv().settings.rainbowText2 do
+			task.wait(4.5)
+			for i, v in next, RainbowHexColors do
+				if not getgenv().settings.rainbowText2 then
+					break
+				end
 		local currentSign = game:GetService('Players').LocalPlayer.Character.DonateSign.TextSign.SurfaceGui.TextLabel.Text
 		text = string.gsub(getgenv().settings.signText, "$C", current)
 		text = string.gsub (text, "$G", goal)
@@ -806,7 +829,7 @@ local function webhook(raised, donor)
 			},
 		},
 		["footer"] = {
-			["text"] = "made by szze#6220 | https://discord.gg/SuNqfnK",
+			["text"] = "Cody <3",
 		},
 		["timestamp"] = string.format("%d-%d-%dT%02d:%02d:%02dZ", a.year, a.month, a.day, a.hour, a.min, a.sec)
 	}
@@ -867,7 +890,7 @@ if game:GetService('CoreGui'):FindFirstChild('RobloxPromptGui') then
 		end
 	end)
 end
-local Window = library:AddWindow("szze#6220 | discord.gg/SuNqfnK",
+local Window = library:AddWindow("Cody <3",
   {
 	main_color = Color3.fromRGB(80, 80, 80),
 	min_size = Vector2.new(500, 563),
@@ -885,7 +908,7 @@ local otherTab2 = Window:AddTab("Other 2")
 local bThemes = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("ScreenGui"):WaitForChild("BoothSettings"):WaitForChild("ScrollingFrame"):WaitForChild("ChangeTheme"):WaitForChild("Themes")
 local TextService = game:GetService("TextService")
 local sgoalR = 0
-  
+updateBoothText()
   --Booth Settings
 local textUpdateToggle = boothTab:AddSwitch("Text Update", function(bool)
 	if settingsLock then
@@ -909,6 +932,15 @@ local noFontSwitch = boothTab:AddSwitch("No Font", function(bool)
 	end
 end)
 noFontSwitch:Set(getgenv().settings.noFont)
+
+local rainbowSwitch2 = signTab:AddSwitch("Rainbow Text", function(bool)
+	getgenv().settings.rainbowText = bool
+	saveSettings()
+	if bool then
+		updateSignText()
+	end
+end)
+rainbowSwitch:Set(getgenv().settings.rainbowText)
 
 local rainbowSwitch = boothTab:AddSwitch("Rainbow Text", function(bool)
 	getgenv().settings.rainbowText = bool
