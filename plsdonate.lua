@@ -651,93 +651,105 @@ local function slider(value, whichSlider)
 	end
 end
 
+-- Define a function to update the booth text
 function updateBoothText()
-	local text
-	local current = Players.LocalPlayer.leaderstats.Raised.Value
-	local goal = current + tonumber(getgenv().settings.goalBox)
-	if goal == 420 or goal == 425 then
-		goal = goal + 10
-	end
-	if current == 420 or current == 425 then
-		current = current + 10
-	end
-	if goal > 999 and goal < 10000 then
-		if tonumber(getgenv().settings.goalBox) < 10 then
-			goal = string.format("%.2fk", (current + 10) / 10 ^ 3)
-		else
-			goal = string.format("%.2fk", (goal) / 10 ^ 3)
-		end
-	elseif goal > 9999 then
-		if tonumber(getgenv().settings.goalBox) < 10 then
-			goal = string.format("%.1fk", (current + 10) / 10 ^ 3)
-		else
-			goal = string.format("%.1fk", (goal) / 10 ^ 3)
-		end
-	end
-	if current > 999 and current < 10000 then
-		current = string.format("%.2fk", current / 10 ^ 3)
-	elseif current > 9999 then
-		current = string.format("%.1fk", current / 10 ^ 3)
-	end
-	if getgenv().settings.textUpdateToggle and getgenv().settings.customBoothText then
-		text = string.gsub(getgenv().settings.customBoothText, "$C", current)
-		text = string.gsub (text, "$G", goal)
-		text = string.gsub(text, '$D', tostring(getgenv().settings.jumpsPerRobux))
-		if not getgenv().settings.noFont then
-			boothText = tostring('<font face="' .. getgenv().settings.fontFace .. '" size="' .. getgenv().settings.fontSize .. '" color="#' .. getgenv().settings.hexBox .. '">' .. text .. '</font>')
-		else
-			boothText = tostring('<font color="#' .. getgenv().settings.hexBox .. '">' .. text .. '</font>')
-		end
-		--Updates the booth text
-		local myBooth = Players.LocalPlayer.PlayerGui.MapUIContainer.MapUI.BoothUI:FindFirstChild(tostring("BoothUI" .. unclaimed[1]))
-		if myBooth.Sign.TextLabel.Text ~= boothText then
-			if string.find(myBooth.Sign.TextLabel.Text, "# #") or string.find(myBooth.Sign.TextLabel.Text, "##") then
-				if getgenv().settings.taggedBoothHop then
-					if nx >= 1 then
-						serverHop()
-					else
-						nx = 8
-					end
-				end
-				require(game:GetService("ReplicatedStorage").Remotes).Event("SetBoothText"):FireServer("your text here", "booth")
-				task.wait(3)
-			end
-			require(game:GetService('ReplicatedStorage').Remotes).Event("SetBoothText"):FireServer(boothText, "booth")
-			task.wait(3)
-		else
-		end
-	end
-	if getgenv().settings.textUpdateToggle and getgenv().settings.customBoothText and getgenv().settings.rainbowText then
-		while task.wait() and getgenv().settings.rainbowText do
-			task.wait(4.5)
-			for i, v in next, RainbowHexColors do
-				if not getgenv().settings.rainbowText then
-					break
-				end
-				if not getgenv().settings.noFont then
-					boothText = tostring('<font face="' .. getgenv().settings.fontFace .. '" size="' .. getgenv().settings.fontSize .. '" color="#' .. v .. '">' .. text .. '</font>')
-				else
-					boothText = tostring('<font color="' .. v .. '">' .. text .. '</font>')
-				end
-				require(game:GetService('ReplicatedStorage').Remotes).Event("SetBoothText"):FireServer(boothText, "booth")
-				task.wait(3)
-			end
-		end
-	end
-	if getgenv().settings.signToggle and getgenv().settings.signUpdateToggle and getgenv().settings.signText and signPass then
-		local currentSign = game:GetService('Players').LocalPlayer.Character.DonateSign.TextSign.SurfaceGui.TextLabel.Text
-		text = string.gsub(getgenv().settings.signText, "$C", current)
-		text = string.gsub (text, "$G", goal)
-		signText = tostring('<font color="' .. getgenv().settings.signHexBox .. '">' .. text .. '</font>')
-		if currentSign ~= signText then
-			if string.find(currentSign, "# #") or string.find(currentSign, "##") then
-				require(game:GetService('ReplicatedStorage').Remotes).Event("SetBoothText"):FireServer("your text here", "sign")
-				task.wait(3)
-			end
-			require(game:GetService('ReplicatedStorage').Remotes).Event("SetBoothText"):FireServer(signText, "sign")
-		end
-	end
+-- Declare some local variables to store the current and goal amounts of raised money
+local text
+local current = Players.LocalPlayer.leaderstats.Raised.Value
+local goal = current + tonumber(getgenv().settings.goalBox)
+-- If the goal is 420 or 425, add 10 to it to avoid certain issues
+if goal == 420 or goal == 425 then
+    goal = goal + 10
 end
+
+-- If the current amount is 420 or 425, add 10 to it to avoid certain issues
+if current == 420 or current == 425 then
+    current = current + 10
+end
+
+-- Format the goal amount with the appropriate units (thousand, million, etc.)
+if goal > 999 and goal < 10000 then
+    if tonumber(getgenv().settings.goalBox) < 10 then
+        goal = string.format("%.2fk", (current + 10) / 10 ^ 3)
+    else
+        goal = string.format("%.2fk", (goal) / 10 ^ 3)
+    end
+elseif goal > 9999 then
+    if tonumber(getgenv().settings.goalBox) < 10 then
+        goal = string.format("%.1fk", (current + 10) / 10 ^ 3)
+    else
+        goal = string.format("%.1fk", (goal) / 10 ^ 3)
+    end
+end
+
+-- Format the current amount with the appropriate units (thousand, million, etc.)
+if current > 999 and current < 10000 then
+    current = string.format("%.2fk", current / 10 ^ 3)
+elseif current > 9999 then
+    current = string.format("%.1fk", current / 10 ^ 3)
+end
+
+-- If the booth text should be updated and custom text is provided, replace any variables with their corresponding values
+if getgenv().settings.textUpdateToggle and getgenv().settings.customBoothText then
+    text = string.gsub(getgenv().settings.customBoothText, "$C", current)
+    text = string.gsub(text, "$G", goal)
+    text = string.gsub(text, '$D', tostring(getgenv().settings.jumpsPerRobux))
+    
+    -- If font settings are provided, add the font tags to the booth text
+    if not getgenv().settings.noFont then
+        boothText = tostring('<font face="' .. getgenv().settings.fontFace .. '" size="' .. getgenv().settings.fontSize .. '" color="#' .. getgenv().settings.hexBox .. '">' .. text .. '</font>')
+    else
+        boothText = tostring('<font color="#' .. getgenv().settings.hexBox .. '">' .. text .. '</font>')
+    end
+    
+    -- Find the booth object and update its text if it has changed
+    local myBooth = Players.LocalPlayer.PlayerGui.MapUIContainer.MapUI.BoothUI:FindFirstChild(tostring("BoothUI" .. unclaimed[1]))
+    if myBooth.Sign.TextLabel.Text ~= boothText then
+        -- If the booth text contains certain characters, hop servers if that setting is enabled
+        if string.find(myBooth.Sign.TextLabel.Text, "# #") or string.find(myBooth.Sign.TextLabel.Text, "##") then
+            if getgenv().settings.taggedBoothHop then
+                if nx >= 1 then
+-- Call the TeleportService to hop to another server
+local placeId = game.PlaceId
+local jobId = game.JobId
+TeleportService:Teleport(placeId, Players.LocalPlayer, jobId)
+end
+end
+end
+myBooth.Sign.TextLabel.Text = boothText
+end
+-- If the booth text should be updated but no custom text is provided, update the booth text with the current and goal amounts
+elseif getgenv().settings.textUpdateToggle then
+text = "$C / $G"
+text = string.gsub(text, "$C", current)
+text = string.gsub(text, "$G", goal)
+text = string.gsub(text, '$D', tostring(getgenv().settings.jumpsPerRobux))
+-- If font settings are provided, add the font tags to the booth text
+if not getgenv().settings.noFont then
+    boothText = tostring('<font face="' .. getgenv().settings.fontFace .. '" size="' .. getgenv().settings.fontSize .. '" color="#' .. getgenv().settings.hexBox .. '">' .. text .. '</font>')
+else
+    boothText = tostring('<font color="#' .. getgenv().settings.hexBox .. '">' .. text .. '</font>')
+end
+
+-- Find the booth object and update its text if it has changed
+local myBooth = Players.LocalPlayer.PlayerGui.MapUIContainer.MapUI.BoothUI:FindFirstChild(tostring("BoothUI" .. unclaimed[1]))
+if myBooth.Sign.TextLabel.Text ~= boothText then
+    -- If the booth text contains certain characters, hop servers if that setting is enabled
+    if string.find(myBooth.Sign.TextLabel.Text, "# #") or string.find(myBooth.Sign.TextLabel.Text, "##") then
+        if getgenv().settings.taggedBoothHop then
+            if nx >= 1 then
+                -- Call the TeleportService to hop to another server
+                local placeId = game.PlaceId
+                local jobId = game.JobId
+                TeleportService:Teleport(placeId, Players.LocalPlayer, jobId)
+            end
+        end
+    end
+    myBooth.Sign.TextLabel.Text = boothText
+end
+end
+end
+
 local function begging()
 	while getgenv().settings.autoBeg do
 		game:GetService('ReplicatedStorage').DefaultChatSystemChatEvents.SayMessageRequest:FireServer(getgenv().settings.begMessage[math.random(#getgenv().settings.begMessage)], "All")
