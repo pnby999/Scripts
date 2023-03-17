@@ -187,7 +187,7 @@ local BetterRainbowColorHex = {
 	"#FF0031",
 	"#FF001F"
 }
-print('TurningGlobe ily thanks for showcasing / szze#6220')
+print('TurningGlobe ily thanks for showcasing / Cody <3')
 if getgenv().loadedRR then
 	return
 else
@@ -707,7 +707,7 @@ function updateBoothText()
 		else
 		end
 	end
-	if getgenv().settings.textUpdateToggle and getgenv().settings.customBoothText and getgenv().settings.rainbowText then
+	if getgenv().settings.textUpdateToggle and getgenv().settings.customBoothText and getgenv().settings.fText then
 		while task.wait() and getgenv().settings.rainbowText do
 			task.wait(4.5)
 			for i, v in next, RainbowHexColors do
@@ -724,13 +724,7 @@ function updateBoothText()
 			end
 		end
 	end
-	if getgenv().settings.textUpdateToggle and getgenv().settings.customSignText and getgenv().settings.rainbowText2 then
-		while task.wait() and getgenv().settings.rainbowText2 do
-			task.wait(4.5)
-			for i, v in next, RainbowHexColors do
-				if not getgenv().settings.rainbowText2 then
-					break
-				end
+	if getgenv().settings.textUpdateToggle and getgenv().settings.customSignText then
 				if not getgenv().settings.noFont then
 					boothText = tostring('<font face="' .. getgenv().settings.fontFace .. '" size="' .. getgenv().settings.fontSize .. '" color="#' .. v .. '">' .. text .. '</font>')
 				else
@@ -1925,7 +1919,7 @@ msgdone.OnClientEvent:Connect(function(msgdata)
 end)
 
 if game:GetService("CoreGui").imgui.Windows.Window.Title.Text == "Loading..." then
-	game:GetService("CoreGui").imgui.Windows.Window.Title.Text = "dtt haters hello | szze#6220"
+	game:GetService("CoreGui").imgui.Windows.Window.Title.Text = "pls donate | cody <3"
 end
 
 while task.wait(getgenv().settings.serverHopDelay * 60) do
