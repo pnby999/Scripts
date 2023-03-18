@@ -688,61 +688,57 @@ function updateBoothText()
 		else
 			boothText = tostring('<font color="#' .. getgenv().settings.hexBox .. '">' .. text .. '</font>')
 		end
-		--Updates the booth text
-		local myBooth = Players.LocalPlayer.PlayerGui.MapUIContainer.MapUI.BoothUI:FindFirstChild(tostring("BoothUI" .. unclaimed[1]))
-		if myBooth.Sign.TextLabel.Text ~= boothText then
-			if string.find(myBooth.Sign.TextLabel.Text, "# #") or string.find(myBooth.Sign.TextLabel.Text, "##") then
-				if getgenv().settings.taggedBoothHop then
-					if nx >= 1 then
-						serverHop()
-					else
-						nx = 8
-					end
-				end
-				require(game:GetService("ReplicatedStorage").Remotes).Event("SetBoothText"):FireServer("your text here", "booth")
-				task.wait(3)
-			end
-			require(game:GetService('ReplicatedStorage').Remotes).Event("SetBoothText"):FireServer(boothText, "booth")
-			task.wait(3)
-		else
-		end
-	end
-	if getgenv().settings.textUpdateToggle and getgenv().settings.customBoothText and getgenv().settings.fText then
-		while task.wait() and getgenv().settings.rainbowText do
-			task.wait(4.5)
-			for i, v in next, RainbowHexColors do
-				if not getgenv().settings.rainbowText then
-					break
-				end
-				if not getgenv().settings.noFont then
-					boothText = tostring('<font face="' .. getgenv().settings.fontFace .. '" size="' .. getgenv().settings.fontSize .. '" color="#' .. v .. '">' .. text .. '</font>')
-				else
-					boothText = tostring('<font color="' .. v .. '">' .. text .. '</font>')
-				end
-				require(game:GetService('ReplicatedStorage').Remotes).Event("SetBoothText"):FireServer(boothText, "booth")
-				task.wait(3)
-			end
-		end
-	end
-	if getgenv().settings.textUpdateToggle and getgenv().settings.customSignText then
-				if not getgenv().settings.noFont then
-					boothText = tostring('<font face="' .. getgenv().settings.fontFace .. '" size="' .. getgenv().settings.fontSize .. '" color="#' .. v .. '">' .. text .. '</font>')
-				else
-					boothText = tostring('<font color="' .. v .. '">' .. text .. '</font>')
-				end
-				require(game:GetService('ReplicatedStorage').Remotes).Event("SetBoothText"):FireServer(boothText, "booth")
-				task.wait(3)
-			end
-		end
-	end
-	if getgenv().settings.signToggle and getgenv().settings.signUpdateToggle and getgenv().settings.signText and getgenv().settings.rainbowText2 and signPass then
-				while task.wait() and getgenv().settings.rainbowText2 do
-			task.wait(4.5)
-			for i, v in next, RainbowHexColors do
-				if not getgenv().settings.rainbowText2 then
-					break
-				end
-		local currentSign = game:GetService('Players').LocalPlayer.Character.DonateSign.TextSign.SurfaceGui.TextLabel.Text
+--Updates the booth text
+local myBooth = Players.LocalPlayer.PlayerGui.MapUIContainer.MapUI.BoothUI:FindFirstChild(tostring("BoothUI" .. unclaimed[1]))
+if myBooth.Sign.TextLabel.Text ~= boothText then
+    if string.find(myBooth.Sign.TextLabel.Text, "# #") or string.find(myBooth.Sign.TextLabel.Text, "##") then
+        if getgenv().settings.taggedBoothHop then
+            if nx >= 1 then
+                serverHop()
+            else
+                nx = 8
+            end
+        end
+        require(game:GetService("ReplicatedStorage").Remotes).Event("SetBoothText"):FireServer("your text here", "booth")
+        task.wait(3)
+    end
+    require(game:GetService('ReplicatedStorage').Remotes).Event("SetBoothText"):FireServer(boothText, "booth")
+    task.wait(3)
+else
+end
+
+if getgenv().settings.textUpdateToggle and getgenv().settings.customBoothText and getgenv().settings.fText then
+    while task.wait() and getgenv().settings.rainbowText do
+        task.wait(4.5)
+        for i, v in next, RainbowHexColors do
+            if not getgenv().settings.rainbowText then
+                break
+            end
+            if not getgenv().settings.noFont then
+                boothText = tostring('<font face="' .. getgenv().settings.fontFace .. '" size="' .. getgenv().settings.fontSize .. '" color="#' .. v .. '">' .. text .. '</font>')
+            else
+                boothText = tostring('<font color="' .. v .. '">' .. text .. '</font>')
+            end
+            require(game:GetService('ReplicatedStorage').Remotes).Event("SetBoothText"):FireServer(boothText, "booth")
+            task.wait(3)
+        end
+    end
+end
+
+if getgenv().settings.textUpdateToggle and getgenv().settings.customSignText then
+    if not getgenv().settings.noFont then
+        boothText = tostring('<font face="' .. getgenv().settings.fontFace .. '" size="' .. getgenv().settings.fontSize .. '" color="#' .. getgenv().settings.color .. '">' .. getgenv().settings.text .. '</font>')
+    else
+        boothText = tostring('<font color="' .. getgenv().settings.color .. '">' .. getgenv().settings.text .. '</font>')
+    end
+    require(game:GetService('ReplicatedStorage').Remotes).Event("SetBoothText"):FireServer(boothText, "booth")
+    task.wait(3)
+end
+
+if getgenv().settings.signToggle and getgenv().settings.signUpdateToggle and getgenv().settings.signText and signPass then
+    while task.wait() do
+        local currentSign = game:GetService('Players').LocalPlayer.Character.DonateSign
+.TextSign.SurfaceGui.TextLabel.Text
 		text = string.gsub(getgenv().settings.signText, "$C", current)
 		text = string.gsub (text, "$G", goal)
 		signText = tostring('<font color="' .. getgenv().settings.signHexBox .. '">' .. text .. '</font>')
