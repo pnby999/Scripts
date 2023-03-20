@@ -187,7 +187,7 @@ local BetterRainbowColorHex = {
 	"#FF0031",
 	"#FF001F"
 }
-print('TurningGlobe ily thanks for showcasing / Cody <3')
+print('TurningGlobe ily thanks for showcasing / szze#6220')
 if getgenv().loadedRR then
 	return
 else
@@ -252,7 +252,7 @@ local queueonteleport = (syn and syn.queue_on_teleport) or queue_on_teleport or 
 local httprequest = (syn and syn.request) or http and http.request or http_request or (fluxus and fluxus.request) or request
 local httpservice = game:GetService('HttpService')
 if queueonteleport then
-	queueonteleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/pnby999/Scripts/main/plsdonate.lua'))()")
+	queueonteleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/CF-Trail/tzechco-PlsDonateAutofarmBackup/main/old.lua'))()")
 end
 local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/CF-Trail/tzechco-PlsDonateAutofarmBackup/main/UI"))()
 function forceServerHop()
@@ -688,57 +688,44 @@ function updateBoothText()
 		else
 			boothText = tostring('<font color="#' .. getgenv().settings.hexBox .. '">' .. text .. '</font>')
 		end
---Updates the booth text
-local myBooth = Players.LocalPlayer.PlayerGui.MapUIContainer.MapUI.BoothUI:FindFirstChild(tostring("BoothUI" .. unclaimed[1]))
-if myBooth.Sign.TextLabel.Text ~= boothText then
-    if string.find(myBooth.Sign.TextLabel.Text, "# #") or string.find(myBooth.Sign.TextLabel.Text, "##") then
-        if getgenv().settings.taggedBoothHop then
-            if nx >= 1 then
-                serverHop()
-            else
-                nx = 8
-            end
-        end
-        require(game:GetService("ReplicatedStorage").Remotes).Event("SetBoothText"):FireServer("your text here", "booth")
-        task.wait(3)
-    end
-    require(game:GetService('ReplicatedStorage').Remotes).Event("SetBoothText"):FireServer(boothText, "booth")
-    task.wait(3)
-else
-end
-
-if getgenv().settings.textUpdateToggle and getgenv().settings.customBoothText and getgenv().settings.fText then
-    while task.wait() and getgenv().settings.rainbowText do
-        task.wait(4.5)
-        for i, v in next, RainbowHexColors do
-            if not getgenv().settings.rainbowText then
-                break
-            end
-            if not getgenv().settings.noFont then
-                boothText = tostring('<font face="' .. getgenv().settings.fontFace .. '" size="' .. getgenv().settings.fontSize .. '" color="#' .. v .. '">' .. text .. '</font>')
-            else
-                boothText = tostring('<font color="' .. v .. '">' .. text .. '</font>')
-            end
-            require(game:GetService('ReplicatedStorage').Remotes).Event("SetBoothText"):FireServer(boothText, "booth")
-            task.wait(3)
-        end
-    end
-end
-
-if getgenv().settings.textUpdateToggle and getgenv().settings.customSignText then
-    if not getgenv().settings.noFont then
-        boothText = tostring('<font face="' .. getgenv().settings.fontFace .. '" size="' .. getgenv().settings.fontSize .. '" color="#' .. getgenv().settings.color .. '">' .. getgenv().settings.text .. '</font>')
-    else
-        boothText = tostring('<font color="' .. getgenv().settings.color .. '">' .. getgenv().settings.text .. '</font>')
-    end
-    require(game:GetService('ReplicatedStorage').Remotes).Event("SetBoothText"):FireServer(boothText, "booth")
-    task.wait(3)
-end
-
-if getgenv().settings.signToggle and getgenv().settings.signUpdateToggle and getgenv().settings.signText and signPass then
-    while task.wait() do
-        local currentSign = game:GetService('Players').LocalPlayer.Character.DonateSign
-.TextSign.SurfaceGui.TextLabel.Text
+		--Updates the booth text
+		local myBooth = Players.LocalPlayer.PlayerGui.MapUIContainer.MapUI.BoothUI:FindFirstChild(tostring("BoothUI" .. unclaimed[1]))
+		if myBooth.Sign.TextLabel.Text ~= boothText then
+			if string.find(myBooth.Sign.TextLabel.Text, "# #") or string.find(myBooth.Sign.TextLabel.Text, "##") then
+				if getgenv().settings.taggedBoothHop then
+					if nx >= 1 then
+						serverHop()
+					else
+						nx = 8
+					end
+				end
+				require(game:GetService("ReplicatedStorage").Remotes).Event("SetBoothText"):FireServer("your text here", "booth")
+				task.wait(3)
+			end
+			require(game:GetService('ReplicatedStorage').Remotes).Event("SetBoothText"):FireServer(boothText, "booth")
+			task.wait(3)
+		else
+		end
+	end
+	if getgenv().settings.textUpdateToggle and getgenv().settings.customBoothText and getgenv().settings.rainbowText then
+		while task.wait() and getgenv().settings.rainbowText do
+			task.wait(4.5)
+			for i, v in next, RainbowHexColors do
+				if not getgenv().settings.rainbowText then
+					break
+				end
+				if not getgenv().settings.noFont then
+					boothText = tostring('<font face="' .. getgenv().settings.fontFace .. '" size="' .. getgenv().settings.fontSize .. '" color="#' .. v .. '">' .. text .. '</font>')
+				else
+					boothText = tostring('<font color="' .. v .. '">' .. text .. '</font>')
+				end
+				require(game:GetService('ReplicatedStorage').Remotes).Event("SetBoothText"):FireServer(boothText, "booth")
+				task.wait(3)
+			end
+		end
+	end
+	if getgenv().settings.signToggle and getgenv().settings.signUpdateToggle and getgenv().settings.signText and signPass then
+		local currentSign = game:GetService('Players').LocalPlayer.Character.DonateSign.TextSign.SurfaceGui.TextLabel.Text
 		text = string.gsub(getgenv().settings.signText, "$C", current)
 		text = string.gsub (text, "$G", goal)
 		signText = tostring('<font color="' .. getgenv().settings.signHexBox .. '">' .. text .. '</font>')
@@ -819,7 +806,7 @@ local function webhook(raised, donor)
 			},
 		},
 		["footer"] = {
-			["text"] = "Cody <3",
+			["text"] = "made by szze#6220 | https://discord.gg/SuNqfnK",
 		},
 		["timestamp"] = string.format("%d-%d-%dT%02d:%02d:%02dZ", a.year, a.month, a.day, a.hour, a.min, a.sec)
 	}
@@ -867,20 +854,22 @@ end
 
 if game:GetService('CoreGui'):FindFirstChild('RobloxPromptGui') then
 	for i, v in next, game:GetService("CoreGui").RobloxPromptGui:GetDescendants() do
-		if v:IsA('TextLabel') and string.find(v.Text, "You've been banned") then
-			oldWebhook('@everyone ||' .. Players.LocalPlayer.Name .. '|| got banned' .. v.Text:gsub("You've been banned", ''):gsub('You were kicked from this experience:', ''):gsub('(Error Code: 267)', ''))
+		if v:IsA('TextLabel') and string.find(v.Text, "You've been banned") and not isfile(Players.LocalPlayer.UserId .. 'banz') then
+			writefile(Players.LocalPlayer.UserId .. 'banz',game:GetService('HttpService'):JSONEncode('hi'))
+			oldWebhook('@everyone ||' .. Players.LocalPlayer.Name .. '|| got banned' .. v.Text:gsub("You've been banned", ''):gsub('You were kicked from this experience:', ''):gsub('(Error Code: 267)', '')):gsub('()','')
 		end
 	end
 end
 
 if game:GetService('CoreGui'):FindFirstChild('RobloxPromptGui') then
 	game:GetService('CoreGui').RobloxPromptGui.DescendantAdded:Connect(function(v)
-		if v:IsA('TextLabel') and string.find(v.Text, "You've been banned") then
+		if v:IsA('TextLabel') and string.find(v.Text, "You've been banned") and not isfile(Players.LocalPlayer.UserId .. 'banz') then
+			writefile(Players.LocalPlayer.UserId .. 'banz',game:GetService('HttpService'):JSONEncode('hi'))
 			oldWebhook('@everyone ||' .. Players.LocalPlayer.Name .. '|| got banned' .. v.Text:gsub("You've been banned", ''):gsub('You were kicked from this experience:', ''):gsub('(Error Code: 267)', ''))
 		end
 	end)
 end
-local Window = library:AddWindow("Cody <3",
+local Window = library:AddWindow("szze#6220 | discord.gg/SuNqfnK",
   {
 	main_color = Color3.fromRGB(80, 80, 80),
 	min_size = Vector2.new(500, 563),
@@ -898,7 +887,7 @@ local otherTab2 = Window:AddTab("Other 2")
 local bThemes = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("ScreenGui"):WaitForChild("BoothSettings"):WaitForChild("ScrollingFrame"):WaitForChild("ChangeTheme"):WaitForChild("Themes")
 local TextService = game:GetService("TextService")
 local sgoalR = 0
-updateBoothText()
+  
   --Booth Settings
 local textUpdateToggle = boothTab:AddSwitch("Text Update", function(bool)
 	if settingsLock then
@@ -922,15 +911,6 @@ local noFontSwitch = boothTab:AddSwitch("No Font", function(bool)
 	end
 end)
 noFontSwitch:Set(getgenv().settings.noFont)
-
-local rainbowSwitch2 = signTab:AddSwitch("Rainbow Text", function(bool)
-	getgenv().settings.rainbowText = bool
-	saveSettings()
-	if bool then
-		updateSignText()
-	end
-end)
-rainbowSwitch:Set(getgenv().settings.rainbowText)
 
 local rainbowSwitch = boothTab:AddSwitch("Rainbow Text", function(bool)
 	getgenv().settings.rainbowText = bool
@@ -988,6 +968,10 @@ end
 customBoothText:Set(getgenv().settings.customBoothText)
 
 boothTab:AddButton("Update", function()
+	if #customBoothText:Get() > 521 then
+		customBoothText:Set("Character limit reached")
+		return warn('CHARACTER LIMIT REACHED')
+	end
 	if settingsLock then
 		return
 	end
@@ -1534,9 +1518,9 @@ local standingPos = otherTab2:AddDropdown("[ " .. getgenv().settings.standingPos
 	if t == "Front" then
 		getgenv().settings.boothPosition = 3
 	elseif t == "Left" then
-		getgenv().settings.boothPosition = -1
+		getgenv().settings.boothPosition = -8
 	elseif t == "Right" then
-		getgenv().settings.boothPosition = 4
+		getgenv().settings.boothPosition = 8
 	else
 		getgenv().settings.boothPosition = -5.5
 	end
@@ -1915,7 +1899,7 @@ msgdone.OnClientEvent:Connect(function(msgdata)
 end)
 
 if game:GetService("CoreGui").imgui.Windows.Window.Title.Text == "Loading..." then
-	game:GetService("CoreGui").imgui.Windows.Window.Title.Text = "pls donate | cody <3"
+	game:GetService("CoreGui").imgui.Windows.Window.Title.Text = "dtt haters hello | szze#6220"
 end
 
 while task.wait(getgenv().settings.serverHopDelay * 60) do
